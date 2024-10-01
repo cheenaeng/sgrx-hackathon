@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 
 import Navbar from '@/components/navbar'
 import { Stack, Typography } from '@mui/material'
@@ -159,77 +159,81 @@ function Dashboard() {
   const [selectedPatient, setSelectedPatient] = useState(rows[0])
 
   return (
-    <Stack sx={{ width: '100%', height: '100%', minHeight: '100vh' }}>
-      <Navbar />
-      <Stack
-        direction='row'
-        justifyContent='space-between'
-        sx={{
-          backgroundColor: '#CEE9FC',
-          padding: '24px'
-        }}
-      >
-        <Stack>
-          <Typography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
-            {selectedPatient.name}
-          </Typography>
-          <Typography>
-            Age: {selectedPatient.age}, Bed: {selectedPatient.bedNumber}, Ward:{' '}
-            {selectedPatient.ward}
-          </Typography>
-          <Typography>DOB: {selectedPatient.dateOfBirth}</Typography>
-          <Typography>Arrival Date: {selectedPatient.arrivalDate},</Typography>
-          <Typography>
-            {selectedPatient.dischargeInfo
-              ? selectedPatient.dischargeInfo
-              : 'Not available'}
-          </Typography>
-        </Stack>
-        <Stack>
-          <Stack
-            sx={{
-              backgroundColor: 'white',
-              padding: '24px',
-              borderRadius: '4px'
-            }}
-          >
-            <Typography
-              sx={{
-                color: 'red'
-              }}
-            >
-              Allergy Status:{' '}
+    <Suspense>
+      <Stack sx={{ width: '100%', height: '100%', minHeight: '100vh' }}>
+        <Navbar />
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+          sx={{
+            backgroundColor: '#CEE9FC',
+            padding: '24px'
+          }}
+        >
+          <Stack>
+            <Typography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+              {selectedPatient.name}
             </Typography>
             <Typography>
-              {selectedPatient.allergyStatus
-                ? selectedPatient.allergyStatus
-                : 'None'}
+              Age: {selectedPatient.age}, Bed: {selectedPatient.bedNumber},
+              Ward: {selectedPatient.ward}
             </Typography>
+            <Typography>DOB: {selectedPatient.dateOfBirth}</Typography>
+            <Typography>
+              Arrival Date: {selectedPatient.arrivalDate},
+            </Typography>
+            <Typography>
+              {selectedPatient.dischargeInfo
+                ? selectedPatient.dischargeInfo
+                : 'Not available'}
+            </Typography>
+          </Stack>
+          <Stack>
+            <Stack
+              sx={{
+                backgroundColor: 'white',
+                padding: '24px',
+                borderRadius: '4px'
+              }}
+            >
+              <Typography
+                sx={{
+                  color: 'red'
+                }}
+              >
+                Allergy Status:{' '}
+              </Typography>
+              <Typography>
+                {selectedPatient.allergyStatus
+                  ? selectedPatient.allergyStatus
+                  : 'None'}
+              </Typography>
+            </Stack>
+          </Stack>
+        </Stack>
+        <Stack
+          flexDirection='row'
+          sx={{
+            height: '100%'
+          }}
+        >
+          <Stack
+            sx={{
+              backgroundColor: '#CEE9FC',
+              height: '100%',
+              width: '15%',
+              minHeight: '85vh'
+            }}
+          ></Stack>
+          <Stack sx={{ height: '100%', padding: '24px', width: '100%' }}>
+            <Typography sx={{ marginBottom: '24px', fontWeight: 'bold' }}>
+              Patient list
+            </Typography>
+            <PatientDataGrid setSelectedPatient={setSelectedPatient} />
           </Stack>
         </Stack>
       </Stack>
-      <Stack
-        flexDirection='row'
-        sx={{
-          height: '100%'
-        }}
-      >
-        <Stack
-          sx={{
-            backgroundColor: '#CEE9FC',
-            height: '100%',
-            width: '15%',
-            minHeight: '85vh'
-          }}
-        ></Stack>
-        <Stack sx={{ height: '100%', padding: '24px', width: '100%' }}>
-          <Typography sx={{ marginBottom: '24px', fontWeight: 'bold' }}>
-            Patient list
-          </Typography>
-          <PatientDataGrid setSelectedPatient={setSelectedPatient} />
-        </Stack>
-      </Stack>
-    </Stack>
+    </Suspense>
   )
 }
 

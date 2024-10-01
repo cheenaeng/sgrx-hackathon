@@ -4,7 +4,7 @@ import { Avatar, Stack, Typography, Tooltip, IconButton } from '@mui/material'
 import MainTab from '../components/mainTab'
 import FlagIcon from '@mui/icons-material/Flag'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { rows } from './dashboard/page'
 export const mockData = {
   patientName: 'Mary S.',
@@ -18,7 +18,7 @@ export const mockData = {
   treatmentTeam: 'XXX MO'
 }
 
-export default function Home() {
+const HomeContent = () => {
   const param = useSearchParams()
   const id = param.get('id')
   const [selectedPatient, setSelectedPatient] = useState(null)
@@ -35,7 +35,6 @@ export default function Home() {
       }
     }
   }, [id])
-
   return (
     <Stack sx={{ width: '100%', height: '100%', minHeight: '100vh' }}>
       <Navbar />
@@ -106,5 +105,13 @@ export default function Home() {
         </Stack>
       </Stack>
     </Stack>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   )
 }

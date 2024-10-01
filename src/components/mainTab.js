@@ -6,7 +6,6 @@ import {
   Typography,
   Button,
   IconButton,
-  Collapse,
   Slide
 } from '@mui/material'
 import NavigatorTabs from './navigatorSpecific'
@@ -183,12 +182,14 @@ const DeclinedNotes = () => {
   )
 }
 
-export default function CenteredTabs({ dataType, isDeclined }) {
+export default function CenteredTabs({ dataType }) {
   const [value, setValue] = React.useState(0)
   const [isAlertOpen, setIsAlertOpen] = React.useState(true)
   const param = useSearchParams()
   const isNewNote = param.get('new-note') === 'true'
   const isReferral = param.get('type') === 'referral'
+  const isDeclined = param.get('decline') === 'true'
+
   const isDeclinedType = param.get('type') === 'decline'
   const handleChange = (event, newValue) => {
     setValue(newValue)
